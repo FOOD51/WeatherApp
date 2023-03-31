@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         URL url = null;
         try {
             url = new URL(biltUri.toString());
-        } catch (MalformedURLException e) {
+        //} catch (MalformedURLException e) {
+            //e.printStackTrace();
+        }catch (MalformedURLException e){
             e.printStackTrace();
         }
         Log.d(TAG, "buildURL: "+url);
@@ -84,8 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String temp_K = weather.getString("temp");
             float temp_C = Float.parseFloat(temp_K);
             temp_C -= (float) 273.15;
-            String temp_C_String = Float.toString(temp_C);
-            temp.setText(temp_C_String);
+            String a[] = String.valueOf(temp_C).split("[.]");
+            //String temp_C_String = Float.toString((int)temp_C);
+            temp.setText(a[0] + " °C");
 
             TextView pressure = findViewById(R.id.pressureValue);
             pressure.setText(weather.getString("pressure") + " гПа");
@@ -106,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             dateString = formatter.format(new Date(Long.parseLong(timeSunset)*1000 + (60*60*1000)*3));
             sunset.setText(dateString);
 
-        }catch (JSONException e){
+        }catch (JSONException|NullPointerException e){
             e.printStackTrace();
         }
     }
